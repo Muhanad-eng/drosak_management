@@ -1,5 +1,6 @@
 import 'package:drosak_management/core/resources/assets_images_manager.dart';
 import 'package:drosak_management/core/resources/color_manager.dart';
+import 'package:drosak_management/core/resources/routes_manager.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,12 +18,20 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    _topAnimation = Tween<Offset>(begin:const Offset(0, -1), end: Offset.zero).animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+        AnimationController(vsync: this, duration: const Duration(seconds: 2))
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              Navigator.pushReplacementNamed(context, RoutesName.kOnboardingScreen);
+            }
+          });
+    _topAnimation = Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero)
+        .animate(CurvedAnimation(
+            parent: _animationController, curve: Curves.easeInOut));
     _animationController.forward();
-     _bottomAnimation = Tween<Offset>(begin:const Offset(0, 1), end: Offset.zero).animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+    _bottomAnimation =
+        Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(
+            CurvedAnimation(
+                parent: _animationController, curve: Curves.easeInOut));
     _animationController.forward();
   }
 
@@ -41,10 +50,11 @@ class _SplashScreenState extends State<SplashScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SlideTransition(
-            position: _topAnimation,
-            child: Image.asset(AssetsImagesManager.topBorderImage)),
-        RotationTransition(turns: _animationController,
-        child: Image.asset(AssetsImagesManager.logo)),
+              position: _topAnimation,
+              child: Image.asset(AssetsImagesManager.topBorderImage)),
+          RotationTransition(
+              turns: _animationController,
+              child: Image.asset(AssetsImagesManager.logo)),
           Align(
               alignment: AlignmentDirectional.bottomEnd,
               child: SlideTransition(
