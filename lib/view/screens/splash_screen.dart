@@ -1,11 +1,36 @@
-
-
 import 'package:drosak_management/core/resources/assets_images_manager.dart';
 import 'package:drosak_management/core/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<Offset> _topAnimation;
+  late Animation<Offset> _bottomAnimation;
+  @override
+  void initState() {
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    _topAnimation = Tween<Offset>(begin:const Offset(0, -1), end: Offset.zero).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+    _animationController.forward();
+     _bottomAnimation = Tween<Offset>(begin:const Offset(0, 1), end: Offset.zero).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +40,16 @@ class SplashScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(AssetsImagesManager.topBorderImage),
-          Image.asset(AssetsImagesManager.logo),
-          Align(alignment: Alignment.centerRight, child: Image.asset(AssetsImagesManager.bottomBorderImage))
-          
+          SlideTransition(
+            position: _topAnimation,
+            child: Image.asset(AssetsImagesManager.topBorderImage)),
+        RotationTransition(turns: _animationController,
+        child: Image.asset(AssetsImagesManager.logo)),
+          Align(
+              alignment: AlignmentDirectional.bottomEnd,
+              child: SlideTransition(
+                  position: _bottomAnimation,
+                  child: Image.asset(AssetsImagesManager.bottomBorderImage)))
         ],
       ),
     );
