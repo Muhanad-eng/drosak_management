@@ -2,6 +2,8 @@ import 'package:drosak_management/core/resources/assets_images_manager.dart';
 import 'package:drosak_management/model/on_boarding/on_boarding_model.dart';
 
 class ConstantsValues {
+  static const String next = "التالي";
+  static const String skip = "تخطي";
   static const double widthDesignScreen = 375;
   static const double heightDesignScreen = 812;
   static const String konBoardingText1 = "يمكنك إضافة  بعض المراحل التعليمية ";

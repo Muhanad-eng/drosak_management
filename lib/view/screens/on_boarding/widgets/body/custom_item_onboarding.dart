@@ -1,5 +1,3 @@
-import 'package:drosak_management/core/resources/assets_images_manager.dart';
-import 'package:drosak_management/core/resources/constants_values.dart';
 import 'package:drosak_management/model/on_boarding/on_boarding_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
