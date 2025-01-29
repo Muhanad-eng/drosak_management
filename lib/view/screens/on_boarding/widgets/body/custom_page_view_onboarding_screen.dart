@@ -5,14 +5,19 @@ import 'custom_item_onboarding.dart';
 
 class CustomPageViewOnBoardingScreen extends StatelessWidget {
   const CustomPageViewOnBoardingScreen({
-    super.key,
+    super.key, required this.controller,
   });
+  final PageController controller;
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-        itemCount:constList.listImages.length ,
-        itemBuilder: (BuildContext context, int index) =>
-            CustomItemOnBoardingScreen(onBoardingModel: constList.listImages[index],));
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: PageView.builder(
+        controller:controller ,
+          itemCount:constList.listImages.length ,
+          itemBuilder: (BuildContext context, int index) =>
+              CustomItemOnBoardingScreen(onBoardingModel: constList.listImages[index],)),
+    );
   }
 }
